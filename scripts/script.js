@@ -37,7 +37,7 @@ var perguntas_alternativas = [
 
     {
         pergunta:'Qual seleção foi campeã da copa do mundo de 2022?',
-        alternativas:['França', 'Croacia', 'Argetina', 'Marrocos'],
+        alternativas:['França', 'Croacia', 'Argentina', 'Marrocos'],
         correta: 2
     },
 
@@ -67,13 +67,15 @@ function mostrarPergunta(){
     let pergunta = document.querySelector('p#txtpergunta')
     let botao = document.querySelector("div#botoesalt")
     let html = ''
+    let np_pontuacao = document.getElementById('np-pontuacao')
 
     for(let i = 0; i <= 3; i++){
-        html += '<button onclick = "verificar ('+ i +')">' + perguntas_alternativas[pergunta_exibida].alternativas[i] + '</button>' 
+        html += '<button onclick = "verificar('+ i +')">' + perguntas_alternativas[pergunta_exibida].alternativas[i] + '</button>' 
     }
 
     botao.innerHTML = html
     pergunta.textContent = perguntas_alternativas[pergunta_exibida].pergunta
+    np_pontuacao.innerHTML = `<span>Pergunta nº ${pergunta_exibida + 1}</span> <span>Acertos: ${pontuacao}</span>`
 
 }
 mostrarPergunta()
@@ -96,18 +98,39 @@ function mostrarResultado(){
     let pergunta = document.querySelector('p#txtpergunta')
     let botao = document.querySelector("div#botoesalt")
     let res = document.getElementById('resfinal')
+    let np_pontuacao = document.getElementById('np-pontuacao')
 
     pergunta.style.display = 'none'
     botao.style.display = 'none'
     res.style.display = 'block'
+    np_pontuacao.style.display = 'none'
+    
 
     if(pontuacao >= 0 && pontuacao <= 4){
-        res.innerHTML = 'Seu resultado não foi bom, mas você pode melhorar!!!'
+        res.innerHTML = `Seu resultado não foi bom, mas você pode melhorar, você obteve ${pontuacao} acertos` + "<button onclick='reiniciar()'>Jogar novamente</button>"
     } else if(pontuacao >=5 && pontuacao <= 7){
-        res.innerHTML = 'Muito bem, parabéns!'
+        res.innerHTML = `Muito bem, você obteve ${pontuacao} acertos` + "<button onclick='reiniciar()'>Jogar novamente</button>"
     } else{
-        res.innerHTML = 'EXPERT!!!!!'
+        res.innerHTML = `EXPERT! você obteve ${pontuacao} acertos` + "<button onclick='reiniciar()'>Jogar novamente</button>"
     }
 
+}
+
+
+function reiniciar(){
+    let pergunta = document.querySelector('p#txtpergunta')
+    let botao = document.querySelector("div#botoesalt")
+    let np_pontuacao = document.getElementById('np-pontuacao')
+    let res = document.getElementById('resfinal')
+
+    pontuacao = 0
+    pergunta_exibida = 0
+
+    pergunta.style.display = 'block'
+    botao.style.display = 'block'
+    np_pontuacao.style.display = 'block'
+    res.style.display = 'none'
+
+    mostrarPergunta()
 }
     
