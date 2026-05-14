@@ -62,4 +62,52 @@ var perguntas_alternativas = [
 
 var pergunta_exibida = 0
 var pontuacao = 0
+
+function mostrarPergunta(){
+    let pergunta = document.querySelector('p#txtpergunta')
+    let botao = document.querySelector("div#botoesalt")
+    let html = ''
+
+    for(let i = 0; i <= 3; i++){
+        html += '<button onclick = "verificar ('+ i +')">' + perguntas_alternativas[pergunta_exibida].alternativas[i] + '</button>' 
+    }
+
+    botao.innerHTML = html
+    pergunta.textContent = perguntas_alternativas[pergunta_exibida].pergunta
+
+}
+mostrarPergunta()
+
+function verificar(resposta){
+    if(resposta == perguntas_alternativas[pergunta_exibida].correta){
+        pontuacao++
+    }
+
+    pergunta_exibida++
+
+    if(pergunta_exibida < 10){
+        mostrarPergunta()
+    } else{
+        mostrarResultado()
+    }
+}
+
+function mostrarResultado(){
+    let pergunta = document.querySelector('p#txtpergunta')
+    let botao = document.querySelector("div#botoesalt")
+    let res = document.getElementById('resfinal')
+
+    pergunta.style.display = 'none'
+    botao.style.display = 'none'
+    res.style.display = 'block'
+
+    if(pontuacao >= 0 && pontuacao <= 4){
+        res.innerHTML = 'Seu resultado não foi bom, mas você pode melhorar!!!'
+    } else if(pontuacao >=5 && pontuacao <= 7){
+        res.innerHTML = 'Muito bem, parabéns!'
+    } else{
+        res.innerHTML = 'EXPERT!!!!!'
+    }
+
+}
     
