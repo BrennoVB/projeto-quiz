@@ -1,4 +1,4 @@
-var perguntas_alternativas = [
+var perguntas_alternativas = [ //Variavel onde guarda as perguntas, alternativas e respostas
     {
         pergunta: "Em que ano o futebol foi criado?",
         alternativas:[1865, 1866, 1863, 1864],
@@ -60,10 +60,10 @@ var perguntas_alternativas = [
     }
 ]
 
-var pergunta_exibida = 0
-var pontuacao = 0
+var pergunta_exibida = 0 // Contador da quantidade de perguntas exibidas
+var pontuacao = 0 // Contador de acertos do usuario
 
-function mostrarPergunta(){
+function mostrarPergunta(){ //Função que mostra a pergunta no HTML
     let pergunta = document.querySelector('p#txtpergunta')
     let botao = document.querySelector("div#botoesalt")
     let html = ''
@@ -78,23 +78,23 @@ function mostrarPergunta(){
     np_pontuacao.innerHTML = `<span>Pergunta nº ${pergunta_exibida + 1}</span> <span>Acertos: ${pontuacao}</span>`
 
 }
-mostrarPergunta()
+mostrarPergunta() //Chamada da função que mostra a pergunta no HTML
 
-function verificar(resposta){
+function verificar(resposta){ //Função que verifica se a alternativa escolhida pelo usuario está correta
     if(resposta == perguntas_alternativas[pergunta_exibida].correta){
-        pontuacao++
+        pontuacao++ //Caso a alternativa esteja correta aumenta o contador pontuação, que iniciou em 0
     }
 
-    pergunta_exibida++
+    pergunta_exibida++ /*Aumenta o contador pergunta exibida independetemente se a alternativa escolhida pelo usuario está correta ou não*/
 
-    if(pergunta_exibida < 10){
+    if(pergunta_exibida < 10){ /*Se a quantidade de perguntas exibidas for menor do que 10, chama a função mostrar pergunta, se não, chama a função mostrar resultado*/
         mostrarPergunta()
     } else{
         mostrarResultado()
     }
 }
 
-function mostrarResultado(){
+function mostrarResultado(){ /*Função que mostra o números de acertos do usuario e um comentario de incentivo juntamente, ela também esconde os elementos do quiz */
     let pergunta = document.querySelector('p#txtpergunta')
     let botao = document.querySelector("div#botoesalt")
     let res = document.getElementById('resfinal')
@@ -117,7 +117,7 @@ function mostrarResultado(){
 }
 
 
-function reiniciar(){
+function reiniciar(){ //Função reiniciar, permite que o usuario jogue novamente o quiz
     let pergunta = document.querySelector('p#txtpergunta')
     let botao = document.querySelector("div#botoesalt")
     let np_pontuacao = document.getElementById('np-pontuacao')
@@ -128,8 +128,10 @@ function reiniciar(){
 
     pergunta.style.display = 'block'
     botao.style.display = 'block'
-    np_pontuacao.style.display = 'block'
+    np_pontuacao.style.display = 'flex'
     res.style.display = 'none'
+    
+
 
     mostrarPergunta()
 }
